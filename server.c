@@ -4,6 +4,7 @@
 #include <sys/types.h>
 #include <netinet/in.h>
 #include <pthread.h>
+#include <unistd.h>
 
 #define MAX_CONNECT 100
 int clientsfd[MAX_CONNECT];
@@ -103,6 +104,8 @@ int main()
 			printf("accept wrong!\n");
 			return -1;
 		}
+		else
+			printf("accept success!\n");
 		int i;
 		for(i = 0;i<MAX_CONNECT;i++)
 		{
@@ -112,19 +115,19 @@ int main()
 				break;
 			}
 		}
+		pthread_t tid;
+		ret = pthread_create(&tid, NULL, task, &accfd);
+		if(ret < 0)
+		{
+			printf("create thread error!\n");
+			return -1;
+		}
+		else
+		{
+			printf("create thread successfully!\n");
+		}
 	}
 
-	pthread_t tid;
-	ret = pthread_create(&tid, NULL, task, &accfd);
-	if(ret < 0)
-	{
-		printf("create thread error!\n");
-		return -1;
-	}
-	else
-	{
-		printf("create thread successfully!\n");
-	}
 
 	close(sockfd);
 	return 0;
