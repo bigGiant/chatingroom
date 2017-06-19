@@ -35,7 +35,8 @@ void* task(void* arg)
 	int accfd = *(int *)arg;
 	while(1)
 	{
-		char buf[128];
+		char buf[128] = {0};
+
 		int ret = recv(accfd, buf, sizeof(buf), 0);
 		if(ret < 0)
 		{

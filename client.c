@@ -49,6 +49,8 @@ int main()
 		printf("connect wrong!\n");
 		return -1;
 	}
+	else
+		printf("connect successful!\n");
 	
 	pthread_t tid;
 	ret = pthread_create(&tid, NULL, task, &sockfd);
@@ -63,7 +65,7 @@ int main()
 		char buf[128];
 		printf("Input: ");
 		scanf("%s", buf);
-		ret = send(sockfd, buf, sizeof(buf), 0);
+		ret = send(sockfd, buf, strlen(buf), 0);
 		if(ret < 0)
 		{
 			printf("msg send wrong!\n");
